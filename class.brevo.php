@@ -31,20 +31,11 @@ class fr_brevo{
         $sd = $sender_default[$sender];
         ob_start();
         switch($template){
-            case 'preisvorschlag-akzeptieren':
-                include TEMPLATEPATH.'/template-parts/tpl/tpl_transactional_preisvorschlag-akzeptieren.php';
-                break;
-            case 'preisvorschlag-abgelehnt':
-                include TEMPLATEPATH.'/template-parts/tpl/tpl_transactional_preisvorschlag-abgelehnt.php';
-                break;
-            case 'preisvorschlag':
-                include TEMPLATEPATH.'/template-parts/tpl/tpl_transactional_preisvorschlag.php';
-                break;
-            case 'preisvorschlag-verkauft':
-                include TEMPLATEPATH.'/template-parts/tpl/tpl_transactional_preisvorschlag-verkauft.php';
+            case 'alternative':
+                include TEMPLATEPATH.'/template-parts/tpl/tpl_email_alternative.php';
                 break;
             default:
-                include TEMPLATEPATH.'/template-parts/tpl/tpl_transactional_default.php';
+                include TEMPLATEPATH.'/template-parts/tpl/tpl_email_default.php';
                 break;
         }
         $objC = ob_get_clean();
