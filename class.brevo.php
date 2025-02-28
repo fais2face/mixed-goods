@@ -1,6 +1,6 @@
 <?php
 
-class ch_emails{
+class fr_brevo{
 
     public static function trans_email($receiver, $emaildata, $template='', $sender='default'){
 
