@@ -38,26 +38,28 @@ class fr_brevo{
                 include TEMPLATEPATH.'/template-parts/tpl/tpl_email_default.php';
                 break;
         }
+        
         $objC = ob_get_clean();
-        $converted = preg_replace('/\r\n|\r|\n/', '', $objC);
-        $converted = str_replace('"', '\"', $converted);
-        $data = <<<DATA
-        {  
-           "sender":{  
-              "name":"{$sd['name']}",
-              "email":"{$sd['email']}"
-           },
-           "to":[  
-              {  
-                 "email":"{$receiver['email']}",
-                 "name":"{$receiver['name']}"
-              }
-           ],
-           "subject":"{$emaildata['subject']}",
-           "htmlContent":"{$converted}"
-        }
-        DATA;
+        $converted = stripslashes($objC);
+        $subject   = html_entity_decode($emaildata['subject'], ENT_QUOTES, 'UTF-8');
 
+        $dataArray = [
+            "sender" => [
+                "name" => $sd['name'],
+                "email" => $sd['email']
+            ],
+            "to" => [
+                [
+                    "email" => $receiver['email'],
+                    "name" => $receiver['name']
+                ]
+            ],
+            "subject" => $subject,
+            "htmlContent" => $converted
+        ];
+
+        $data = json_encode($dataArray, JSON_UNESCAPED_UNICODE);
+        
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
         //for debug only!
